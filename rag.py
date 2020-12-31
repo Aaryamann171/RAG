@@ -1,26 +1,50 @@
 import random
 import os
-f = open("questionbank.txt", "r+")
+
+question_bank = open("questionbank.txt", "r+") # question bank in csv format
 student_name = input("Enter the student name: ")
 student_rollnumber = input("Enter the student rollnumber: ")
-os.system('touch {}.ms'.format(student_name))
-ms_file = open("{}.ms".format(student_name), "w")
-for line in f:
-    questions = line.strip().split(',')
-# print questions
-unique_questions = list()
-ms_data = ".PDFPIC /home/oreo/Documents/rnd_demo/rag/uni_logo.pdf 2\n.TL\nProgram: B. Tech. Discipline: CSE\n.AU\nSemester VI Academic Year 2020\n.AI\nEnd Semester Open book assignment\n.DA\n.B\nStudent Name: {}\nStudent Roll Number: {}\n.SH\n.nr instuction 1 1\nInstructions:\n.IP \\n[instuction] 3\nDon't copy from each other\n.IP \\n+[instuction]\nSubmit the exam before deadline\n.IP \\n+[instuction]\nAnswer all questions in your own words.\n.SH\nQuestions".format(
-    student_name, student_rollnumber)
 
+os.system('touch {}.ms'.format(student_name)) # creates a temporary ms file (will be deleted after program is finished)
+ms_file = open("{}.ms".format(student_name), "w") # opening the ms file
+
+# read questions from the question bank
+for question in question_bank:
+    questions = question.strip().split(',') # makes a list of all the questions
+
+question_bank.close() # closing question bank file
+
+# print(questions)
+
+# enter your information here
+unique_questions = list()
+logo = "uni_logo.pdf" # path to logo
+program = "B.Tech."
+discipline = "CSE"
+semester = "VI"
+academic_year = "2020-21"
+exam_name = "End Semester Open Book Exam"
+instructions = ("Don't copy from each other", "Submit the exam before deadline", "Answer all questions in your own words.")
+
+ms_data = f".PDFPIC {logo} 2\n.TL\nProgram: {program} Discipline: {discipline}\n.AU\nSemester {semester} Academic Year {academic_year}\n.AI\n{exam_name}\n.DA\n.B\nStudent Name: {student_name}\nStudent Roll Number: {student_rollnumber}\n.SH\n.nr instuction 1 1\nInstructions:\n.IP \\n[instuction] 3\n{instructions[0]}\n.IP \\n+[instuction]\n{instructions[1]}\n.IP \\n+[instuction]\n{instructions[2]}\n.SH\nQuestions"
+
+
+# adding 5 random questions to a new list called unique_questions
 for i in range(5):
-    unique_questions.append(questions.pop(random.randint(0, len(questions)-1)))
-# print("NIIT UNIVERSITY")
-# print("End Semeter")
+    nq = len(questions) # number of questions in the remaining in the list
+    ri = random.randint(0, nq-1) # random index
+    rq = questions.pop(ri) # random question from the question bank
+    unique_questions.append(rq)
+
+# print(unique_questions)
+
+# adding the selected questions to the ms data string
 for j in range(5):
     # print("Q{}. {}".format(j+1, unique_questions[j]))
     ms_data += ("\n.PP\nQ{}. {}".format(j+1, unique_questions[j]))
 
-n = ms_file.write(ms_data)
-ms_file.close()
-os.system('groff -U -ms {}.ms -T pdf > {}.pdf'.format(student_name, student_name))
-os.system('rm {}.ms'.format(student_name))
+n = ms_file.write(ms_data) # wrting the ms data string to a ms file
+ms_file.close() # closing ms file
+
+os.system(f"groff -U -ms {student_name}.ms -T pdf > {student_name}.pdf") # coverts ms file to pdf
+os.system(f"rm {student_name}.ms") # removes now redundant groff ms file
