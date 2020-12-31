@@ -36,7 +36,7 @@ unique_questions = random.sample(questions, 5)
 # adding the selected questions to the ms data string
 for i in range(5):
     # print("Q{}. {}".format(i+1, unique_questions[i]))
-    ms_data += ("\n.PP\nQ{}. {}".format(i+1, unique_questions[i]))
+    ms_data += f"\n.PP\nQ{i+1}. {unique_questions[i]}"
 
 n = ms_file.write(ms_data) # wrting the ms data string to a ms file
 ms_file.close() # closing ms file
