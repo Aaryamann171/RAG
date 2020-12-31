@@ -1,1 +1,0 @@
-decribe kalman filter,what is fuzzy logic?,name one usecase of object recognition,which company developed bootstrap?,which language is used by angular?,what is the technique used is color extraction?,what is HSV color space?,what are the steps involved in a genetic algorithm?,what is the n-queens problem,describe the a star algorithms

@@ -1,7 +1,7 @@
 import random
 import os
 
-question_bank = open("questionbank.txt", "r+") # question bank in csv format
+question_bank = open("questionbank.csv", "r+") # question bank in csv format
 student_name = input("Enter the student name: ")
 student_rollnumber = input("Enter the student rollnumber: ")
 
