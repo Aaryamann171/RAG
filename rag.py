@@ -17,7 +17,6 @@ question_bank.close() # closing question bank file
 # print(questions)
 
 # enter your information here
-unique_questions = list()
 logo = "uni_logo.pdf" # path to logo
 program = "B.Tech."
 discipline = "CSE"
@@ -30,18 +29,14 @@ ms_data = f".PDFPIC {logo} 2\n.TL\nProgram: {program} Discipline: {discipline}\n
 
 
 # adding 5 random questions to a new list called unique_questions
-for i in range(5):
-    nq = len(questions) # number of questions in the remaining in the list
-    ri = random.randint(0, nq-1) # random index
-    rq = questions.pop(ri) # random question from the question bank
-    unique_questions.append(rq)
+unique_questions = random.sample(questions, 5)
 
 # print(unique_questions)
 
 # adding the selected questions to the ms data string
-for j in range(5):
-    # print("Q{}. {}".format(j+1, unique_questions[j]))
-    ms_data += ("\n.PP\nQ{}. {}".format(j+1, unique_questions[j]))
+for i in range(5):
+    # print("Q{}. {}".format(i+1, unique_questions[i]))
+    ms_data += ("\n.PP\nQ{}. {}".format(i+1, unique_questions[i]))
 
 n = ms_file.write(ms_data) # wrting the ms data string to a ms file
 ms_file.close() # closing ms file
